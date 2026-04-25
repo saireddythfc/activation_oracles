@@ -16,6 +16,18 @@ from transformers.trainer_callback import EarlyStoppingCallback, TrainerCallback
 from trl import SFTConfig, SFTTrainer
 
 import wandb
+
+# ---------------------------------------------------------------------------
+# W&B authentication — set WANDB_API_KEY in your environment before running:
+#   export WANDB_API_KEY=your40charkey
+# ---------------------------------------------------------------------------
+_wandb_key = os.environ.get("WANDB_API_KEY")
+if _wandb_key:
+    wandb.login(key=_wandb_key)
+else:
+    # Disable W&B silently if no key is provided (training still runs fine)
+    os.environ["WANDB_MODE"] = "disabled"
+    print("[INFO] WANDB_API_KEY not set — W&B logging disabled.")
 from datasets import Dataset, concatenate_datasets, load_dataset
 
 # ---------------------------------------------------------------------------
